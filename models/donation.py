@@ -224,6 +224,7 @@ class Donation(models.Model):
                 str(calendar.timegm(self.timereceived.timetuple())) + self.donor.email
             )
 
+        self.save()
         bids = set(self.bids.all())
 
         # because non-saved bids will not have an id, they are not hashable, so we have to special case them
