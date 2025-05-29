@@ -64,7 +64,7 @@ setup(
     extras_require={
         'development': ['daphne~=4.0'],
     },
-    python_requires='>=3.8, <3.13',
+    python_requires='>=3.8, <3.14',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',

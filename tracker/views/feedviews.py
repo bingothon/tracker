@@ -59,7 +59,7 @@ class UpcomingBidsView(View):
                 'amount_raised': float(bid.total),
                 'allow_custom_options': bid.allowuseroptions,
                 'state': bid.state,
-                'run_started': bid.speedrun.starttime < now,
+                'run_started': bool(bid.speedrun.starttime and bid.speedrun.starttime < now),
                 'options': [],
             }
             for option in bid.options.filter(state__in=['OPENED','CLOSED']):
@@ -86,7 +86,7 @@ class RecentDonationsView(View):
         for donation in donations:
             result = {
                 'id': donation.id,
-                'donor': donation.donor.visible_name(),
+                'donor': donation.visible_donor_name(),
                 'comment': donation.comment if donation.commentstate == 'APPROVED' else '',
                 'amount': float(donation.amount),
                 'bids': []
