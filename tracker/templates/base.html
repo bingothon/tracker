@@ -6,6 +6,18 @@
 <head>
     <title>{% block title %}Base Title{% endblock %}</title>
 
+    {# TODO: use actually neutral icon here? #}
+    <link rel="icon" href="https://bingothon.com/wp-content/uploads/2020/08/cropped-bingothonred2-32x32.png" sizes="32x32">
+    <link rel="icon" href="https://bingothon.com/wp-content/uploads/2020/08/cropped-bingothonred2-192x192.png" sizes="192x192">
+    <link rel="apple-touch-icon" href="https://bingothon.com/wp-content/uploads/2020/08/cropped-bingothonred2-180x180.png">
+    <meta name="msapplication-TileImage" content="https://bingothon.com/wp-content/uploads/2020/08/cropped-bingothonred2-270x270.png">
+    {#
+        for summer
+    <link rel="icon" href="https://bingothon.com/wp-content/uploads/2020/01/cropped-bingothon-square-logo-32x32.png" sizes="32x32">
+    <link rel="icon" href="https://wp.bingothon.com/wp-content/uploads/2020/01/cropped-bingothon-square-logo-192x192.png" sizes="192x192">
+    <link rel="apple-touch-icon" href="https://wp.bingothon.com/wp-content/uploads/2020/01/cropped-bingothon-square-logo-180x180.png">
+    <meta name="msapplication-TileImage" content="https://wp.bingothon.com/wp-content/uploads/2020/01/cropped-bingothon-square-logo-270x270.png">
+     #}
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
 
     <script type="application/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -33,16 +45,16 @@
     {% block head %}
     {% endblock %}
 </head>
-<body>
+<body class="{{ settings.TRACKER_THEME }}">
 
 {% block nav %}
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    {% if settings.TRACKER_LOGO %}
-                      <li><a class="navbar-brand" href="/"><img src="{{ settings.TRACKER_LOGO }}" style="height: 100%" alt="Logo"></a></li>
-                    {% endif %}
+                    {% with 'images/'|add:settings.TRACKER_THEME|add:'-logo-small.png' as img_static %}
+                        <li><a href="https://bingothon.com/"><img class="home-button" src="{% static img_static %}"/></a></li>
+                    {% endwith %}
                     {% if event.short %}
                         <li><a href="{% url 'tracker:index' event=event.short %}">{% trans "Home" %}</a></li>
                         <li><a href="{% url 'tracker:runindex' event=event.short %}">{% trans "Runs" %}</a></li>

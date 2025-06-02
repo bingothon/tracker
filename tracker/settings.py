@@ -46,6 +46,11 @@ class TrackerSettings(object):
     @property
     def TRACKER_ENABLE_BROWSABLE_API(self):
         return getattr(settings, 'TRACKER_ENABLE_BROWSABLE_API', settings.DEBUG)
+    
+    @property
+    def TRACKER_THEME(self):
+        # currently only supports summer and winter
+        return getattr(settings, 'TRACKER_THEME', 'winter')
 
     @property
     def PAYPAL_TEST(self):
