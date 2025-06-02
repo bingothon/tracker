@@ -49,6 +49,9 @@ def index(request, **kwargs):
             'app_name': 'TrackerApp',
             'form_errors': {},
             'props': {},
+            'settings': {
+                'TRACKER_THEME': settings.TRACKER_THEME
+            },
         },
     )
 
@@ -185,6 +188,9 @@ def donate(request, event):
                 'prizesUrl': request.build_absolute_uri(
                     reverse('tracker:prizeindex', args=(event.id,))
                 ),
+            },
+            'settings': {
+                'TRACKER_THEME': settings.TRACKER_THEME
             },
         },
     )
