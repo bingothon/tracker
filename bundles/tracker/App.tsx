@@ -44,16 +44,14 @@ const App = (props: React.ComponentProps<typeof DonateInitializer>) => {
     });
   }, []);
 
-  const { SWEEPSTAKES_URL } = useConstants();
-
   return (
     <>
       {ready && (
         <BrowserRouter basename={props.ROOT_PATH}>
           <Routes>
             <Route path="events/:eventId">
-              {SWEEPSTAKES_URL && <Route path="prizes" element={<PrizesRoute />} />}
-              {SWEEPSTAKES_URL && <Route path="prizes/:prizeId" element={<PrizeRoute />} />}
+              <Route path="prizes" element={<PrizesRoute />} />
+              <Route path="prizes/:prizeId" element={<PrizeRoute />} />
               <Route path="donate" element={<DonateRoute />} />
             </Route>
             <Route path="*" element={<NotFound />} />

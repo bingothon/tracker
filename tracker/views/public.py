@@ -505,9 +505,6 @@ def run_detail(request, pk):
 
 @cache_page(60)
 def prizeindex(request, event=None):
-    if not settings.TRACKER_SWEEPSTAKES_URL:
-        raise Http404
-
     event = viewutil.get_event(event)
 
     if not event.id:
@@ -533,8 +530,6 @@ def prizeindex(request, event=None):
 
 @cache_page(60)
 def prize_detail(request, pk):
-    if not settings.TRACKER_SWEEPSTAKES_URL:
-        raise Http404
     try:
         prize = Prize.objects.prefetch_related(
             Prefetch(

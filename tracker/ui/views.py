@@ -118,12 +118,6 @@ def donate(request, event):
         'prize', {'feed': 'current', 'event': event.id}
     )
 
-    # You have to try really hard to get into this state so it's reasonable to blow up spectacularly when it happens
-    if prizes and not settings.TRACKER_SWEEPSTAKES_URL:
-        raise ImproperlyConfigured(
-            'There are prizes available but no TRACKER_SWEEPSTAKES_URL is set'
-        )
-
     bidsArray = [bid_info(o) for o in bids]
 
     def prize_info(prize):

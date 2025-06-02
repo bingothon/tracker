@@ -222,10 +222,6 @@ class Prize(models.Model):
         return self.endtime.astimezone(datetime.timezone.utc)
 
     def clean(self, winner=None):
-        if not settings.TRACKER_SWEEPSTAKES_URL:
-            raise ValidationError(
-                'Cannot create prizes without a TRACKER_SWEEPSTAKES_URL in settings'
-            )
         if self.maxmultiwin > 1 and self.category is not None:
             raise ValidationError(
                 {
@@ -263,11 +259,6 @@ class Prize(models.Model):
             )
 
     def save(self, *args, **kwargs):
-        if not settings.TRACKER_SWEEPSTAKES_URL:
-            raise ImproperlyConfigured(
-                'Cannot create prizes without a TRACKER_SWEEPSTAKES_URL in settings'
-            )
-
         using = kwargs.get('using', None)
         self.maximumbid = self.minimumbid
         if self.startrun and self.startrun.order and self.endrun and self.endrun.order:
