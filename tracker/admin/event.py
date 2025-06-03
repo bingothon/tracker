@@ -449,6 +449,7 @@ class EventAdmin(RelatedUserMixin, CustomModelAdmin):
                 'app_name': 'AdminApp',
                 'form_errors': {},
                 'props': {},
+                'settings': settings
             },
         )
 

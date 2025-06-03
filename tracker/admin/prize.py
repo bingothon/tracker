@@ -22,7 +22,7 @@ from .util import (
     CustomModelAdmin,
     EventLockedMixin,
     RelatedUserMixin,
-#    latest_event_id,
+    current_or_next_event_id,
     mass_assign_action,
 )
 
@@ -700,7 +700,7 @@ class PrizeAdmin(EventLockedMixin, RelatedUserMixin, CustomModelAdmin):
 
     def get_changeform_initial_data(self, request):
         return super().get_changeform_initial_data(request) | {
-            "event": event
+            "event": current_or_next_event_id()
         }
 
 
