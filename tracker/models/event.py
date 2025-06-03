@@ -73,7 +73,7 @@ class EventQuerySet(models.QuerySet):
                     ),
                     0.0,
                 ),
-                output_field=models.DecimalField(),
+                output_field=models.DecimalField(max_digits=100, decimal_places=2),
             ),
             donation_count=Count(
                 'donation', filter=Q(donation__transactionstate='COMPLETED')
