@@ -86,7 +86,7 @@ class RecentDonationsView(View):
         for donation in donations:
             result = {
                 'id': donation.id,
-                'donor': donation.visible_donor_name(),
+                'donor': donation.visible_donor_name,
                 'comment': donation.comment if donation.commentstate == 'APPROVED' else '',
                 'amount': float(donation.amount),
                 'bids': []
