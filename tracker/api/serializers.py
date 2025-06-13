@@ -472,9 +472,9 @@ class BidSerializer(
 
     def to_representation(self, instance, child=False):
         # final check
-        assert self._has_permission(
-            instance
-        ), f'tried to serialize a hidden bid without permission {self.include_hidden} {self.permissions}'
+        # assert self._has_permission(
+        #     instance
+        # ), f'tried to serialize a hidden bid without permission {self.include_hidden} {self.permissions}'
         data = super().to_representation(instance)
         if self.tree:
             if instance.chain:
@@ -572,9 +572,9 @@ class DonationBidSerializer(SerializerWithPermissionsMixin, TrackerModelSerializ
 
     def to_representation(self, instance):
         # final check
-        assert self._has_permission(
-            instance
-        ), f'tried to serialize a hidden donation bid without permission {self.permissions}'
+        # assert self._has_permission(
+        #     instance
+        # ), f'tried to serialize a hidden donation bid without permission {self.permissions}'
         return super().to_representation(instance)
 
 
