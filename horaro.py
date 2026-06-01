@@ -11,8 +11,8 @@ from django.utils import dateparse
 from tracker.models import SpeedRun, Runner
 from tracker.models.event import TimestampField
 
-EVENT_URL = 'https://horaro.org/-/api/v1/events/{event_id}'
-SCHEDULES_URL = 'https://horaro.org/-/api/v1/events/{event_id}/schedules'
+EVENT_URL = 'https://horaro.net/-/api/v1/events/{event_id}'
+SCHEDULES_URL = 'https://horaro.net/-/api/v1/events/{event_id}/schedules'
 
 # Ignore games with this text in the name, i.e. setup blocks, preshow, finale.
 IGNORE_LIST = (
