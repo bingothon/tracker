@@ -309,6 +309,15 @@ class Event(models.Model):
         help_text='Column index for commentator info (start at 0)'
     )
 
+    # oengus info
+    oengus_id = models.CharField(
+        max_length=100,
+        verbose_name='Oengus ID',
+        blank=True,
+        default='',
+        help_text='ID or slug for Oengus event'
+    )
+
     def __str__(self):
         return self.name
 

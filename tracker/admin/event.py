@@ -24,6 +24,7 @@ from django.views.decorators.csrf import csrf_protect
 import tracker.models.fields
 from tracker import forms, models, search_filters, settings
 import tracker.horaro as horaro
+import tracker.oengus as oengus
 
 from ..auth import send_registration_mail
 from . import inlines
@@ -89,6 +90,13 @@ class EventAdmin(RelatedUserMixin, CustomModelAdmin):
                 'classes': ['collapse'],
                 'fields': ['horaro_id',  'horaro_game_col', 'horaro_category_col',
                             'horaro_runners_col'],
+            }
+        ),
+        (
+            'Oengus Schedule',
+            {
+                'classes': ['collapse'],
+                'fields': ['oengus_id'],
             }
         ),
         (
@@ -734,6 +742,29 @@ class EventAdmin(RelatedUserMixin, CustomModelAdmin):
             self.message_user(request, "%d runs merged for %s." % (num_runs, event.name), level=messages.SUCCESS)
     merge_horaro_schedule.short_description = "Merge Horaro schedule for a single event (do this once every 24 hours)"
 
+    def merge_oengus_schedule(self, request, queryset):
+        """Merge run schedule from Oengus API."""
+        if len(queryset) != 1:
+            self.message_user(request, "Please select only a single event for Oengus merge", level=messages.ERROR)
+            return
+        # Get content type for log entries.
+        ct = ContentType.objects.get_for_model(tracker.models.Event)
+        for event in queryset:
+            num_runs = 0
+            try:
+                with transaction.atomic():
+                    num_runs = oengus.merge_event_schedule(event)
+                    msg = 'Merged Oengus schedule for event {} - {} runs'.format(event, num_runs)
+                    admin.models.LogEntry.objects.log_action(user_id=request.user.id, content_type_id=ct.pk, object_id=event.pk,
+                                                   object_repr=str(event), action_flag=admin.models.CHANGE,
+                                                   change_message=msg)
+            except oengus.OengusError as e:
+                self.message_user(request, "Can't merge Oengus schedule - {}".format(e), level=messages.ERROR)
+        else:
+            self.message_user(request, "%d runs merged for %s." % (num_runs, event.name), level=messages.SUCCESS)
+    merge_oengus_schedule.short_description = "Merge Oengus schedule for a single event (do this once every 24 hours)"
+
+
     actions = [
         send_volunteer_emails,
         donor_report,
@@ -743,7 +774,8 @@ class EventAdmin(RelatedUserMixin, CustomModelAdmin):
         donationbid_report,
         prize_report,
         email_report,
-        merge_horaro_schedule,
+        # merge_horaro_schedule,
+        merge_oengus_schedule,
     ]
 
 
